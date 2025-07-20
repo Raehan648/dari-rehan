@@ -1,0 +1,174 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Penting untuk efek hati yang melayang */
+    background-color: #f7e6f8; /* Warna latar belakang ungu muda */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Tinggi penuh viewport */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Warna teks default */
+    position: relative;
+    cursor: pointer; /* Menunjukkan bahwa halaman bisa diklik */
+    user-select: none; /* Mencegah teks terpilih saat diklik */
+    -webkit-user-select: none; /* Untuk browser WebKit */
+    -moz-user-select: none; /* Untuk Firefox */
+    -ms-user-select: none; /* Untuk IE/Edge */
+}
+
+/* Hati untuk background yang melayang */
+.background-heart {
+    position: absolute;
+    background-color: #ffb6c1; /* Light pink */
+    transform: rotate(-45deg);
+    pointer-events: none; /* Agar tidak menghalangi interaksi */
+    z-index: 0; /* Pastikan di belakang semua elemen lain */
+    opacity: 0; /* Mulai tersembunyi */
+    animation: floatHeart 10s infinite ease-in-out; /* Animasi melayang tak terbatas */
+}
+
+.background-heart::before,
+.background-heart::after {
+    content: '';
+    position: absolute;
+    background-color: #ffb6c1; /* Light pink */
+    border-radius: 50%;
+}
+
+.background-heart::before {
+    top: -50%;
+    left: 0;
+}
+
+.background-heart::after {
+    top: 0;
+    left: 50%;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translate(0, 0) rotate(-45deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+        transform: translate(0, -10vh) rotate(-45deg) scale(0.5);
+    }
+    100% {
+        transform: translate(0, -100vh) rotate(-45deg) scale(1);
+        opacity: 0;
+    }
+}
+
+
+#messages {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2em; /* Ukuran font lebih besar */
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap; /* Mencegah teks melipat ke baris baru */
+    z-index: 5; /* Pastikan di atas hati yang jatuh */
+    color: #5d2b77; /* Warna teks lebih gelap */
+    transition: opacity 0.5s ease-in-out; /* Transisi untuk pesan */
+}
+
+/* Styling untuk hati yang jatuh saat diklik (tetap ada jika Anda menginginkannya) */
+.heart {
+    position: absolute;
+    background-color: #ff69b4; /* Pink */
+    transform: rotate(-45deg);
+    pointer-events: none; /* Agar tidak menghalangi klik pada body */
+    z-index: 1; /* Pastikan di bawah pesan */
+    animation: fadeOut 2s forwards; /* Animasi menghilang */
+    opacity: 1;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    background-color: #ff69b4; /* Pink */
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -50%;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 50%;
+}
+
+/* Keyframes untuk animasi hati yang jatuh (saat diklik) */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(-45deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 150%) scale(0.5) rotate(-45deg); /* Jauhkan ke bawah */
+    }
+}
+
+#buttonContainer {
+    position: absolute;
+    top: calc(50% + 50px); /* Sedikit di bawah posisi pesan */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+#dimulaiButton {
+    padding: 12px 25px; /* Padding lebih besar */
+    font-size: 1.3em; /* Ukuran font lebih besar */
+    background-color: #ff69b4; /* Warna pink */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Sudut lebih membulat */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Bayangan lebih kuat */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi saat hover */
+}
+
+#dimulaiButton:hover {
+    background-color: #e04a9e; /* Pink lebih gelap saat hover */
+    transform: translateX(-50%) scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Canvas styling for the final heart animation */
+#canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Sembunyikan secara default */
+    background-color: black; /* Latar belakang hitam untuk animasi hati */
+    justify-content: center;
+    align-items: center;
+    z-index: 100; /* Pastikan di atas elemen lain */
+}
+
+#loveCanvas {
+    display: block; /* Agar tidak ada margin/padding aneh */
+    background-color: black; /* Pastikan canvas sendiri juga hitam */
+}
+
+/* Gaya untuk teks "I love you sayang" di canvas */
+#canvas-text {
+    position: absolute;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 3em; /* Ukuran font lebih besar */
+    font-weight: bold;
+    text-align: center;
+    z-index: 101; /* Di atas canvas */
+    opacity: 0; /* Sembunyikan default */
+    transition: opacity 1s ease-in-out; /* Transisi kemunculan */
+}
